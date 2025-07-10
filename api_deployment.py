@@ -36,7 +36,6 @@ if __name__ == "__main__":
 @app.route('/')
 def home():
     return "✅ Hybrid Spam Detection API is running."
-
 @app.route('/health')
 def health():
     return jsonify({"status": "API is running"})
