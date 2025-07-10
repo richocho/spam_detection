@@ -18,7 +18,7 @@ def predict():
     spam_keywords = ['won', 'free', 'congratulations', 'money', 'prize', 'urgent', 'click here', 'offer']
 
     # Short message filter — only if it's not obviously spam
-    if len(message.split()) <= 5 and len(message) <= 30:
+    if len(message.split()) <= 3 and len(message) <= 15:
         if any(word in message.lower() for word in spam_keywords):
             pass  # let model decide
         else:
