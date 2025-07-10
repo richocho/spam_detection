@@ -16,7 +16,7 @@ def predict():
         return jsonify({'error': 'No message provided'}), 400
 
     # Custom short message logic
-    if len(message.split()) <= 3 and len(message) <= 15:
+    if len(message.split()) <= 5 and len(message) <= 30:
         return jsonify({
             'prediction': 'ham',
             'note': 'Manually classified as ham due to short length.'
