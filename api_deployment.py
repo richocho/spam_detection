@@ -30,13 +30,14 @@ def predict():
         'prediction': label,
         'confidence': round(confidence * 100, 2)
     })
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    
 @app.route('/')
 def home():
     return "✅ Hybrid Spam Detection API is running."
 @app.route('/health')
 def health():
     return jsonify({"status": "API is running"})
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
