@@ -15,12 +15,17 @@ def predict():
     if not message:
         return jsonify({'error': 'No message provided'}), 400
 
-    # Custom short message logic
+    spam_keywords = ['won', 'free', 'congratulations', 'money', 'prize', 'urgent', 'click here', 'offer']
+
+    # Short message filter — only if it's not obviously spam
     if len(message.split()) <= 5 and len(message) <= 30:
-        return jsonify({
-            'prediction': 'ham',
-            'note': 'Manually classified as ham due to short length.'
-        })
+        if any(word in message.lower() for word in spam_keywords):
+            pass  # let model decide
+        else:
+            return jsonify({
+                'prediction': 'ham',
+                'note': 'Classified as ham due to short and simple content.'
+            })
 
     prediction = model.predict([message])[0]
     confidence = model.predict_proba([message])[0][prediction]
@@ -30,6 +35,7 @@ def predict():
         'prediction': label,
         'confidence': round(confidence * 100, 2)
     })
+
     
 @app.route('/')
 def home():
