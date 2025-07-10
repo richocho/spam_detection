@@ -3,10 +3,9 @@ from flask_cors import CORS
 import joblib
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # ✅ This line allows requests from your frontend
 
-# Load the saved hybrid model
-model = joblib.load("model/hybrid_spam_model.pkl")
+model = joblib.load("hybrid_spam_model.pkl")
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -16,7 +15,7 @@ def predict():
     if not message:
         return jsonify({'error': 'No message provided'}), 400
 
-    # Basic override: classify very short messages as ham
+    # Custom short message logic
     if len(message.split()) <= 3 and len(message) <= 15:
         return jsonify({
             'prediction': 'ham',
@@ -31,11 +30,10 @@ def predict():
         'prediction': label,
         'confidence': round(confidence * 100, 2)
     })
-
+    
 @app.route('/')
 def home():
     return "✅ Hybrid Spam Detection API is running."
-
 @app.route('/health')
 def health():
     return jsonify({"status": "API is running"})
